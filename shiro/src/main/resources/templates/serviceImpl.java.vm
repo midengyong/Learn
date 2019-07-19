@@ -1,0 +1,67 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+import java.util.List;
+
+/**
+ * Title:       [shiro — ${entity}模块]
+ * Description: [${entity}类信息的service层实现类]
+ * Created on   ${date}
+ * @version     V1.0
+ * @author  ${author}
+ */
+@Slf4j
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    @Autowired
+    private ${table.mapperName} ${table.entityPath}Mapper;
+
+    @Override
+    public IPage<${entity}> selectPageWithParam(Page<${entity}> page, ${entity} ${table.entityPath}){
+		QueryWrapper<${entity}> entityWrapper = new QueryWrapper<>(${table.entityPath});
+		IPage<${entity}> ${table.entityPath}Page  = page(page,entityWrapper);
+		if (${table.entityPath}Page.getCurrent()>${table.entityPath}Page.getPages()){
+		    page.setCurrent(${table.entityPath}Page.getPages());
+            ${table.entityPath}Page = page(page,entityWrapper);
+		}
+		return  ${table.entityPath}Page;
+    }
+
+    @Override
+    public int add${entity}(${entity} ${table.entityPath}) {
+		Integer insert = ${table.entityPath}Mapper.insert(${table.entityPath});
+		return insert;
+    }
+
+    @Override
+    public int update${entity}(${entity} ${table.entityPath}) {
+		Integer update = ${table.entityPath}Mapper.updateById(${table.entityPath});
+		return update;
+    }
+
+    @Override
+    public int deleteByIds(List<Integer> ids) {
+		Integer deleteBatchIds = ${table.entityPath}Mapper.deleteBatchIds(ids);
+		return deleteBatchIds;
+    }
+
+    @Override
+    public ${entity} findById(Integer id) {
+    ${entity} ${table.entityPath} = ${table.entityPath}Mapper.selectById(id);
+    return ${table.entityPath};
+    }
+
+}

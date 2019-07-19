@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lrfc.shiro.mapper.SysUserRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lrfc.shiro.entity.SysUserRole">
+        <id column="id" property="id" />
+        <result column="u_id" property="uId" />
+        <result column="r_id" property="rId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, u_id, r_id
+    </sql>
+
+    <select id="findRoleNameByAccount" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select sr.name from sys_user_role as sur left join sys_role as sr on sur.r_id = sr.id
+        where sur.u_id = #{userId} and sr.isDeleted = 'N';
+    </select>
+</mapper>

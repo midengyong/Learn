@@ -1,0 +1,123 @@
+package ${package.Controller};
+
+import org.springframework.web.bind.annotation.*;
+    #if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import com.lrfc.shiro.common.annotation.InterfaceInformation;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lrfc.shiro.common.response.ResponseData;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+/**
+ * Title:       [shiro — ${entity}模块]
+ * Description: [${entity}类信息的controller层接口]
+ * Created on   ${date}
+ * @version     V1.0
+ * @author  ${author}
+ */
+@Slf4j
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@Api(value="#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    public ${table.serviceName} ${table.entityPath}Service;
+
+    /**
+     * Description:[单表分页查询]
+     * @param ${table.entityPath} ${table.comment}   [实体]
+     * @param length  [单页大小]
+     * @param pageNo  [页数]
+     * @return  ResponseData
+     */
+    @GetMapping("/get${entity}List")
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "paginationQuery",author = "${author}")
+    @ApiOperation(value="/get${entity}List", notes="获取分页列表")
+    public ResponseData get${entity}List(@ApiParam(name="${entity}",value="${entity} 实体类")${entity} ${table.entityPath} ,
+                @RequestParam(name = "length") @ApiParam(name="length",value="页大小",defaultValue = "10")Integer length,
+                @RequestParam(name = "pageNo") @ApiParam(name="pageNo",value="页数",defaultValue = "1")Integer pageNo) {
+		//构造分页对象
+		Page<${entity}> page=new Page<>(pageNo,length);
+		//查询
+		IPage<${entity}> ${table.entityPath}Page = ${table.entityPath}Service.selectPageWithParam(page, ${table.entityPath});
+
+		//判断有无数据并返回
+		return CollectionUtils.isEmpty(${table.entityPath}Page.getRecords()) ? ResponseData.findNoData() : ResponseData.findSuccess(${table.entityPath}Page);
+    }
+
+    /**
+      * Description:[通过id获取实体信息]
+      * @param id  [id]
+      * @return  ResponseData
+      */
+    @GetMapping("/get${entity}ById")
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "query",author = "${author}")
+    @ApiOperation(value="/get${entity}ById", notes="通过id获取${entity}")
+    public ResponseData get${entity}ById( @RequestParam(name = "id") @ApiParam(name="id",value="${entity}ID",required=true)Integer id) {
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.findById(id);
+		return ${table.entityPath} == null ? ResponseData.findNoData() : ResponseData.findSuccess(${table.entityPath});
+    }
+
+    /**
+    * Description:[通过id删除实体信息]
+    * @param ids  [id]
+    * @return  ResponseData
+    */
+    @PostMapping("/delete${entity}ByIds")
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "delete",author = "${author}")
+    @ApiOperation(value="/delete${entity}ByIds", notes="通过id删除${entity}")
+    public ResponseData delete${entity}ByIds(@RequestBody  @ApiParam(name="id",value="${entity}ID",required=true)List<Integer> ids) {
+		int id = ${table.entityPath}Service.deleteByIds(ids);
+		return id == 0 ? ResponseData.OperationFailed() : ResponseData.OperationSuccess();
+    }
+
+    /**
+     * Description:[通过实体ID修改信息]
+     * @param ${table.entityPath}  [实体信息]
+     * @return  ResponseData
+     */
+    @PostMapping("/update${entity}ById")
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "update",author = "${author}")
+    @ApiOperation(value="/update${entity}ById", notes="通过id更新${entity}")
+    public ResponseData update${entity}ById(@RequestBody @ApiParam(name="${entity}",value="${entity} 实体类")${entity} ${table.entityPath}) {
+		int id = ${table.entityPath}Service.update${entity}(${table.entityPath});
+		return id == 0 ? ResponseData.OperationFailed() : ResponseData.OperationSuccess();
+    }
+
+    /**
+    * Description:[通过实体添加新的数据]
+    * @param ${table.entityPath}  [实体信息]
+    * @return  ResponseData
+    */
+	@PostMapping("/add${entity}")
+	@InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "insert",author = "${author}")
+    @ApiOperation(value="/add${entity}", notes="添加${entity}")
+    public ResponseData add${entity}(@RequestBody @ApiParam(name="${entity}",value="${entity} 实体类")${entity} ${table.entityPath}) {
+		int id = ${table.entityPath}Service.add${entity}(${table.entityPath});
+		return id == 0 ? ResponseData.OperationFailed() : ResponseData.OperationSuccess();
+    }
+}

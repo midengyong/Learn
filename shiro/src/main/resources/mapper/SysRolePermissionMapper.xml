@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lrfc.shiro.mapper.SysRolePermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lrfc.shiro.entity.SysRolePermission">
+        <id column="id" property="id" />
+        <result column="r_id" property="rId" />
+        <result column="p_id" property="pId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, r_id, p_id
+    </sql>
+
+    <select id="findPermissionByRoles" resultType="java.lang.String" parameterType="java.util.Set">
+        select sp.permission   from  sys_role_permission as srp left join sys_permission as sp on srp.p_id = sp.id
+        where sp.isDeleted = 'N' and  srp.p_id in
+        <foreach item="item" collection="collection" open="(" separator="," close=");">
+            #{item}
+        </foreach>
+
+    </select>
+
+    <select id="findPermissionsByRoles"  resultType="java.lang.String" parameterType="java.util.Set">
+        select sp.permission,sp.url   from  sys_role_permission as srp left join sys_permission as sp on srp.p_id = sp.id
+        where sp.isDeleted = 'N' and  srp.p_id in
+        <foreach item="item" index="index" collection="roles" open="(" separator="," close=");">
+            #{item}
+        </foreach>
+
+    </select>
+</mapper>

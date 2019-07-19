@@ -1,0 +1,26 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import java.util.List;
+
+/**
+ * Title:       [shiro — ${entity}模块]
+ * Description: [${entity}类信息的service层接口]
+ * Created on   ${date}
+ * @version     V1.0
+ * @author  ${author}
+ */
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+	IPage<${entity}> selectPageWithParam(Page<${entity}> page,${entity} param);
+
+	int add${entity}(${entity} ${table.entityPath});
+
+	int update${entity}(${entity} ${table.entityPath});
+
+	int deleteByIds(List<Integer> ids);
+
+    ${entity} findById(Integer id);
+}
