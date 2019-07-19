@@ -13,9 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Company:     民航西南凯亚
- * Department:  研发部
- * Title:       [MyBatisPlus — 模块名]
+ * Title:       [MyBatisPlus — 逆向配置文件]
  * Description: []
  * Created on   2018年10月24日
  *
