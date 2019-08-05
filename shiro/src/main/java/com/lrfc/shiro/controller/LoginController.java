@@ -4,15 +4,13 @@ import com.lrfc.shiro.common.utils.PasswordUtils;
 import com.lrfc.shiro.entity.SysUser;
 import com.lrfc.shiro.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Title:       [Learn — Shiro]
@@ -43,14 +41,30 @@ public class LoginController {
 		return "addUser";
 	}
 
+
 	@PostMapping("/login")
-	public String   login(@RequestParam("userName") String userName,@RequestParam("passWord") String passWord){
-		log.info("进入登录请求接口");
-		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName,passWord);
-		usernamePasswordToken.setRememberMe(true);
-		subject.login(usernamePasswordToken);
-		return "redirect:/index";
+	public String   login(HttpServletRequest request,Model model){
+		log.info("处理登录失败逻辑");
+		String  shiroLoginFailure = (String) request.getAttribute("shiroLoginFailure");
+		if ("org.apache.shiro.authc.UnknownAccountException".equals(shiroLoginFailure)){
+			log.error("账户不存在");
+			model.addAttribute("msg","账户不存在");
+		}else if ("org.apache.shiro.authc.IncorrectCredentialsException".equals(shiroLoginFailure)){
+			log.info("账户或密码错误");
+			model.addAttribute("msg","账户或密码错误");
+		}else if ("com.lrfc.shiro.common.exception.VerificationException".equals(shiroLoginFailure)){
+			log.info("验证码错误");
+			model.addAttribute("msg","验证码错误");
+		}else {
+			log.info("未知错误");
+			model.addAttribute("msg","未知错误"+shiroLoginFailure);
+		}
+		return "redirect:/tologin";
+	}
+
+	@GetMapping("/")
+	public String to(){
+		return "redirect:/tologin";
 	}
 
 	@GetMapping("/tologin")
@@ -69,12 +83,12 @@ public class LoginController {
 		return "403";
 	}
 
-	@GetMapping("/logout")
-	public String logout(){
-		Subject subject = SecurityUtils.getSubject();
-		subject.logout();
-		return "redirect:/tologin";
-	}
+//	@GetMapping("/logout")
+//	public String logout(){
+//		Subject subject = SecurityUtils.getSubject();
+//		subject.logout();
+//		return "redirect:/tologin";
+//	}
 
 	@GetMapping("/index")
 	public String index(Model model){

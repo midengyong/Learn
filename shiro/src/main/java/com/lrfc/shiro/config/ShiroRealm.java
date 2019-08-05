@@ -45,8 +45,15 @@ public class ShiroRealm extends AuthorizingRealm {
 		log.info("授权流程");
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 		UserDto userDto = (UserDto) principals.getPrimaryPrincipal();
-		simpleAuthorizationInfo.addRoles(userDto.getRole());//添加角色集合
-		simpleAuthorizationInfo.addStringPermissions(new HashSet<>(userDto.getPermission()));//添加权限集合
+
+		List<String> roleNames = sysUserRoleService.findRoleNameByAccount(userDto.getId());
+		//如果用户角色不为null，查询用户权限
+		if (!CollectionUtils.isEmpty(roleNames)){
+			Set<String> roleNamesSet = new HashSet<>(roleNames);
+			List<String> permissions = sysRolePermissionService.findPermissionByRoles(roleNamesSet);
+			simpleAuthorizationInfo.addStringPermissions(new HashSet<>(permissions));//添加权限集合
+		}
+		simpleAuthorizationInfo.addRoles(roleNames);//添加角色集合
 
 		return simpleAuthorizationInfo;
 	}
@@ -64,16 +71,8 @@ public class ShiroRealm extends AuthorizingRealm {
 		queryWrapper.eq("account",username);
 		SysUser sysUser = sysUserService.getOne(queryWrapper);
 		if (StringUtils.isEmpty(sysUser))
-			throw new UnknownAccountException("此用户不存在");
+			return null;
 		UserDto userDto = UserDto.adapt(sysUser);
-
-		List<String> roleNames = sysUserRoleService.findRoleNameByAccount(userDto.getId());
-		if (!CollectionUtils.isEmpty(roleNames)){
-			Set<String> roleNamesSet = new HashSet<>(roleNames);
-			List<String> permissions = sysRolePermissionService.findPermissionByRoles(roleNamesSet);
-			userDto.setPermission(permissions);
-		}
-		userDto.setRole(roleNames);
 
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(userDto,sysUser.getPassword(), ByteSource.Util.bytes(sysUser.getSalt()),"realm");
 		return simpleAuthenticationInfo;

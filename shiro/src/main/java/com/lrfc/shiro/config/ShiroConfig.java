@@ -8,6 +8,8 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -66,21 +68,26 @@ public class ShiroConfig {
 	public ShiroFilterFactoryBean shiroFilterFactoryBean(){
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(defaultSecurityManager());
+		Map<String, Filter> filterMap = new HashMap<>();
+		filterMap.put("authc",new CustomFormAuthenticationFilter());
 
 		Map<String,String> map = new LinkedHashMap<>();
 
 		//过滤的流程从上至下执行，默认的过滤器有：anon,authc,perms,roles,user
-		map.put("/login","anon");//不需要认证也可以进行访问
-		map.put("/logout","anon");
+		map.put("/tologin","anon");//不需要认证也可以进行访问,登录页面
+		map.put("/verificationCode","anon");//验证码接口
+		map.put("/","anon");
 		map.put("/all","anon");
 		map.put("/addUser","anon");
 		map.put("/addPage","anon");
 		map.put("/access/add","perms[access:add]");
 		map.put("/access/test","perms[test]");
+		map.put("/logout","logout");//配置使用LogoutFilter过滤器默认实现实现退出功能
 		map.put("/**","authc");//所有请求都需要认证
 
+		shiroFilterFactoryBean.setFilters(filterMap);
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
-		shiroFilterFactoryBean.setLoginUrl("/tologin");
+		shiroFilterFactoryBean.setLoginUrl("/login");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		shiroFilterFactoryBean.setSuccessUrl("/index");
 		return shiroFilterFactoryBean;
