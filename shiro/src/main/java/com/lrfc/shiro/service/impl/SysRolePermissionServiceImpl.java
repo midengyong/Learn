@@ -68,4 +68,9 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 		return sysRolePermissionMapper.findPermissionByRoles(roles);
 	}
 
+	@Override
+	public int cleanRolePermission() {
+		return sysRolePermissionMapper.cleanRolePermission();
+	}
+
 }

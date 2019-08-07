@@ -31,4 +31,8 @@
         </foreach>
 
     </select>
+
+    <delete id="cleanRolePermission">
+        DELETE  FROM sys_role_permission
+    </delete>
 </mapper>

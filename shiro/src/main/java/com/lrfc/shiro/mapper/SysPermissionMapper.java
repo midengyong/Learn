@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Title:       [shiro — SysPermission模块]
  * Description: [SysPermission类信息的持久层]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
@@ -15,5 +15,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
+	int cleanPermission();
+
+	int addSysPermissionById(SysPermission sysPermission);
 
 }

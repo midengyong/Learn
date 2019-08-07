@@ -1,0 +1,11 @@
+# 自定义变量
+custom:
+  title: xx系统 # 标题
+  isAddMenu: true # 是否重新加载菜单,按钮
+  system:
+    account:
+      create: true # 是否创建
+      default-account: lrfc # 帐户名
+      default-name: mqq # 默认名称
+      default-pwd: lrfc # 密码
+    role: lrfc # 默认系统角色名

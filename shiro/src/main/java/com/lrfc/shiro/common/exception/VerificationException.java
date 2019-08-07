@@ -1,7 +1,7 @@
 package com.lrfc.shiro.common.exception;
 
 /**
- * Description: [说明]
+ * Description: [验证码异常处理]
  * Created on   2019年08月05日
  *
  * @author 米邓勇

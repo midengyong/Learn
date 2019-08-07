@@ -7,12 +7,14 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="remark" property="remark" />
+        <result column="modifier" property="modifier" />
+        <result column="modify_time" property="modifyTime" />
         <result column="isDeleted" property="isDeleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, remark, isDeleted
+        id, name, remark, modifier, modify_time, isDeleted
     </sql>
 
 </mapper>

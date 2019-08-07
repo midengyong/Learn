@@ -13,13 +13,15 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 /**
  * Title:       [shiro — SysRole模块]
  * Description: [SysRole类信息的controller层接口]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
@@ -34,13 +36,14 @@ public class SysRoleController {
 
     /**
      * Description:[单表分页查询]
-     * @param sysRole    [实体]
+     * @param sysRole 角色   [实体]
      * @param length  [单页大小]
      * @param pageNo  [页数]
      * @return  ResponseData
      */
     @GetMapping("/getSysRoleList")
-    @InterfaceInformation(target = "/sysRole/getSysRoleList",name = "paginationQuery",author = "lrfc")
+    @RequiresPermissions(value = {"sysRole:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysRole/getSysRoleList",parentId = 0,name = "角色查询")
     @ApiOperation(value="/getSysRoleList", notes="获取分页列表")
     public ResponseData getSysRoleList(@ApiParam(name="SysRole",value="SysRole 实体类")SysRole sysRole ,
                 @RequestParam(name = "length") @ApiParam(name="length",value="页大小",defaultValue = "10")Integer length,
@@ -60,7 +63,8 @@ public class SysRoleController {
       * @return  ResponseData
       */
     @GetMapping("/getSysRoleById")
-    @InterfaceInformation(target = "/sysRole/getSysRoleList",name = "query",author = "lrfc")
+    @RequiresPermissions(value = {"sysRole:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysRole/getSysRoleById",parentId = 0,name = "角色查询")
     @ApiOperation(value="/getSysRoleById", notes="通过id获取SysRole")
     public ResponseData getSysRoleById( @RequestParam(name = "id") @ApiParam(name="id",value="SysRoleID",required=true)Integer id) {
         SysRole sysRole = sysRoleService.findById(id);
@@ -73,7 +77,8 @@ public class SysRoleController {
     * @return  ResponseData
     */
     @PostMapping("/deleteSysRoleByIds")
-    @InterfaceInformation(target = "/sysRole/getSysRoleList",name = "delete",author = "lrfc")
+    @RequiresPermissions(value = {"sysRole:delete"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysRole/deleteSysRoleByIds",parentId = 0,name = "角色删除")
     @ApiOperation(value="/deleteSysRoleByIds", notes="通过id删除SysRole")
     public ResponseData deleteSysRoleByIds(@RequestBody  @ApiParam(name="id",value="SysRoleID",required=true)List<Integer> ids) {
 		int id = sysRoleService.deleteByIds(ids);
@@ -86,7 +91,8 @@ public class SysRoleController {
      * @return  ResponseData
      */
     @PostMapping("/updateSysRoleById")
-    @InterfaceInformation(target = "/sysRole/getSysRoleList",name = "update",author = "lrfc")
+    @RequiresPermissions(value = {"sysRole:update"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysRole/updateSysRoleById",parentId = 0,name = "角色修改")
     @ApiOperation(value="/updateSysRoleById", notes="通过id更新SysRole")
     public ResponseData updateSysRoleById(@RequestBody @ApiParam(name="SysRole",value="SysRole 实体类")SysRole sysRole) {
 		int id = sysRoleService.updateSysRole(sysRole);
@@ -99,7 +105,8 @@ public class SysRoleController {
     * @return  ResponseData
     */
 	@PostMapping("/addSysRole")
-	@InterfaceInformation(target = "/sysRole/getSysRoleList",name = "insert",author = "lrfc")
+	@RequiresPermissions(value = {"sysRole:add"},logical = Logical.OR)
+	@InterfaceInformation(target = "/sysRole/addSysRole",parentId = 0,name = "角色添加")
     @ApiOperation(value="/addSysRole", notes="添加SysRole")
     public ResponseData addSysRole(@RequestBody @ApiParam(name="SysRole",value="SysRole 实体类")SysRole sysRole) {
 		int id = sysRoleService.addSysRole(sysRole);

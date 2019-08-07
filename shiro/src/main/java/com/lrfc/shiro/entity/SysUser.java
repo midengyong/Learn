@@ -10,11 +10,12 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Title:       [shiro — SysUser模块]
  * Description: [SysUser类信息的实体类]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
@@ -53,16 +54,26 @@ private static final long serialVersionUID=1L;
     private String isLock;
 
     /**
+     * 昵称
+     */
+    private String name;
+
+    /**
+     * 最后修改者
+     */
+    private String modifier;
+
+    /**
+     * 最后修改时间
+     */
+    private LocalDateTime modifyTime;
+
+    /**
      * 是否已删除；Y:已删除；N：未删除
      */
     @TableField("isDeleted")
     @TableLogic
     private String isDeleted;
-
-    /**
-     * 昵称
-     */
-    private String name;
 
 
     @Override

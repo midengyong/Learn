@@ -1,4 +1,4 @@
-package com.lrfc.shiro.config;
+package com.lrfc.shiro.config.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lrfc.shiro.dto.UserDto;

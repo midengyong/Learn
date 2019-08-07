@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Title:       [shiro — SysPermission模块]
  * Description: [SysPermission类信息的service层实现类]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
@@ -46,7 +46,12 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 		return insert;
     }
 
-    @Override
+	@Override
+	public int addSysPermissionById(SysPermission sysPermission) {
+		return sysPermissionMapper.addSysPermissionById(sysPermission);
+	}
+
+	@Override
     public int updateSysPermission(SysPermission sysPermission) {
 		Integer update = sysPermissionMapper.updateById(sysPermission);
 		return update;
@@ -63,5 +68,10 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     SysPermission sysPermission = sysPermissionMapper.selectById(id);
     return sysPermission;
     }
+
+	@Override
+	public int cleanPermission() {
+		return sysPermissionMapper.cleanPermission();
+	}
 
 }

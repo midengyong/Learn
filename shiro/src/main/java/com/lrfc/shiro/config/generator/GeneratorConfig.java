@@ -1,4 +1,4 @@
-package com.lrfc.shiro.config;
+package com.lrfc.shiro.config.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -27,7 +27,7 @@ public class GeneratorConfig {
 
 	// tables : 需要生成表的集合
 	//private static  String[] tables = new  String[]{ "sys_user","sys_role","sys_permission","sys_user_role","sys_role_permission"};
-	private static  String[] tables = new  String[]{ "sys_user"};
+	private static  String[] tables = new  String[]{ "sys_user","sys_role","sys_permission"};
 	// perfix : 前缀
 	private static  String[] perfix = new  String[]{ "t_"};
 	// auther : 作者

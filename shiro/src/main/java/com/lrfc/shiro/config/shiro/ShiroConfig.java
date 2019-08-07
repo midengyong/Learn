@@ -1,4 +1,4 @@
-package com.lrfc.shiro.config;
+package com.lrfc.shiro.config.shiro;
 
 import com.lrfc.shiro.common.utils.PasswordUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -77,6 +77,7 @@ public class ShiroConfig {
 		map.put("/tologin","anon");//不需要认证也可以进行访问,登录页面
 		map.put("/verificationCode","anon");//验证码接口
 		map.put("/","anon");
+		map.put("/jquery-3.4.1.min.js","anon");//放行js
 		map.put("/all","anon");
 		map.put("/addUser","anon");
 		map.put("/addPage","anon");

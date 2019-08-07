@@ -7,6 +7,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface InterfaceInformation {
     String target() default "";
-    String name() default "";
-    String author() default "";
+//    String name() default "";
+    String author() default "system";
+
+	int[] parentId() ;
+	String[] name() ;
+	int type() default 1;
 }

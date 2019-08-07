@@ -1,4 +1,4 @@
-package com.lrfc.shiro;
+package com.lrfc.shiro.common.enums;
 
 /**
  * Description: [常量类]
@@ -8,7 +8,10 @@ package com.lrfc.shiro;
  * @version v1.0
  */
 public enum Constant {
-	SHIRO_LOGIN_FAILURE("shiroLoginFailure");
+	SHIRO_LOGIN_FAILURE("shiroLoginFailure"),
+	IS_DELETED_Y("Y"),
+	IS_DELETED_N("N");
+
 
 	Constant(String value){
 		this.value = value;

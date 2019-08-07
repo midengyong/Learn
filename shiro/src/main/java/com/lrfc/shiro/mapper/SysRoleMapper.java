@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Title:       [shiro — SysRole模块]
  * Description: [SysRole类信息的持久层]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */

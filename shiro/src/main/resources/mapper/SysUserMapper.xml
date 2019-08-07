@@ -9,13 +9,15 @@
         <result column="password" property="password" />
         <result column="salt" property="salt" />
         <result column="isLock" property="isLock" />
-        <result column="isDeleted" property="isDeleted" />
         <result column="name" property="name" />
+        <result column="modifier" property="modifier" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="isDeleted" property="isDeleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, account, password, salt, isLock, isDeleted, name
+        id, account, password, salt, isLock, name, modifier, modify_time, isDeleted
     </sql>
 
 </mapper>

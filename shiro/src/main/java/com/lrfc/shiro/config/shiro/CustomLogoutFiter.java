@@ -1,9 +1,9 @@
-package com.lrfc.shiro.config;
+package com.lrfc.shiro.config.shiro;
 
 import org.apache.shiro.web.filter.authc.LogoutFilter;
 
 /**
- * ClassName：com.lrfc.shiro.config.CustomLogoutFiter
+ * ClassName：com.lrfc.shiro.config.shiro.CustomLogoutFiter
  * Description: [自定义退出登录过滤器]
  * Created on   2019年08月05日
  *

@@ -1,6 +1,6 @@
-package com.lrfc.shiro.config;
+package com.lrfc.shiro.config.shiro;
 
-import com.lrfc.shiro.Constant;
+import com.lrfc.shiro.common.enums.Constant;
 import com.lrfc.shiro.common.utils.ImageUtils;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * ClassName：com.lrfc.shiro.config.CustomFormAuthenticationFilter
  * Description: [自定义认证过滤器]
  * Created on   2019年08月05日
  *

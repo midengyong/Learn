@@ -1,25 +1,26 @@
 package com.lrfc.shiro.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
-import com.lrfc.shiro.common.annotation.InterfaceInformation;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lrfc.shiro.common.annotation.InterfaceInformation;
 import com.lrfc.shiro.common.response.ResponseData;
-import com.lrfc.shiro.service.SysPermissionService;
 import com.lrfc.shiro.entity.SysPermission;
+import com.lrfc.shiro.service.SysPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 /**
  * Title:       [shiro — SysPermission模块]
  * Description: [SysPermission类信息的controller层接口]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
@@ -34,13 +35,14 @@ public class SysPermissionController {
 
     /**
      * Description:[单表分页查询]
-     * @param sysPermission    [实体]
+     * @param sysPermission 资源   [实体]
      * @param length  [单页大小]
      * @param pageNo  [页数]
      * @return  ResponseData
      */
     @GetMapping("/getSysPermissionList")
-    @InterfaceInformation(target = "/sysPermission/getSysPermissionList",name = "paginationQuery",author = "lrfc")
+    @RequiresPermissions(value = {"sysPermission:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysPermission/getSysPermissionList",parentId = 0,name = "资源查询")
     @ApiOperation(value="/getSysPermissionList", notes="获取分页列表")
     public ResponseData getSysPermissionList(@ApiParam(name="SysPermission",value="SysPermission 实体类")SysPermission sysPermission ,
                 @RequestParam(name = "length") @ApiParam(name="length",value="页大小",defaultValue = "10")Integer length,
@@ -60,7 +62,8 @@ public class SysPermissionController {
       * @return  ResponseData
       */
     @GetMapping("/getSysPermissionById")
-    @InterfaceInformation(target = "/sysPermission/getSysPermissionList",name = "query",author = "lrfc")
+    @RequiresPermissions(value = {"sysPermission:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysPermission/getSysPermissionById",parentId = 0,name = "资源查询")
     @ApiOperation(value="/getSysPermissionById", notes="通过id获取SysPermission")
     public ResponseData getSysPermissionById( @RequestParam(name = "id") @ApiParam(name="id",value="SysPermissionID",required=true)Integer id) {
         SysPermission sysPermission = sysPermissionService.findById(id);
@@ -73,7 +76,8 @@ public class SysPermissionController {
     * @return  ResponseData
     */
     @PostMapping("/deleteSysPermissionByIds")
-    @InterfaceInformation(target = "/sysPermission/getSysPermissionList",name = "delete",author = "lrfc")
+    @RequiresPermissions(value = {"sysPermission:delete"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysPermission/deleteSysPermissionByIds",parentId = 0,name = "资源删除")
     @ApiOperation(value="/deleteSysPermissionByIds", notes="通过id删除SysPermission")
     public ResponseData deleteSysPermissionByIds(@RequestBody  @ApiParam(name="id",value="SysPermissionID",required=true)List<Integer> ids) {
 		int id = sysPermissionService.deleteByIds(ids);
@@ -86,7 +90,8 @@ public class SysPermissionController {
      * @return  ResponseData
      */
     @PostMapping("/updateSysPermissionById")
-    @InterfaceInformation(target = "/sysPermission/getSysPermissionList",name = "update",author = "lrfc")
+    @RequiresPermissions(value = {"sysPermission:update"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysPermission/updateSysPermissionById",parentId = 0,name = "资源修改")
     @ApiOperation(value="/updateSysPermissionById", notes="通过id更新SysPermission")
     public ResponseData updateSysPermissionById(@RequestBody @ApiParam(name="SysPermission",value="SysPermission 实体类")SysPermission sysPermission) {
 		int id = sysPermissionService.updateSysPermission(sysPermission);
@@ -99,7 +104,8 @@ public class SysPermissionController {
     * @return  ResponseData
     */
 	@PostMapping("/addSysPermission")
-	@InterfaceInformation(target = "/sysPermission/getSysPermissionList",name = "insert",author = "lrfc")
+	@RequiresPermissions(value = {"sysPermission:add"},logical = Logical.OR)
+	@InterfaceInformation(target = "/sysPermission/addSysPermission",parentId = 0,name = "资源添加")
     @ApiOperation(value="/addSysPermission", notes="添加SysPermission")
     public ResponseData addSysPermission(@RequestBody @ApiParam(name="SysPermission",value="SysPermission 实体类")SysPermission sysPermission) {
 		int id = sysPermissionService.addSysPermission(sysPermission);

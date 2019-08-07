@@ -20,6 +20,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -55,7 +57,8 @@ public class ${table.controllerName} {
      * @return  ResponseData
      */
     @GetMapping("/get${entity}List")
-    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "paginationQuery",author = "${author}")
+    @RequiresPermissions(value = {"${table.entityPath}:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",parentId = 0,name = "${table.comment}查询")
     @ApiOperation(value="/get${entity}List", notes="获取分页列表")
     public ResponseData get${entity}List(@ApiParam(name="${entity}",value="${entity} 实体类")${entity} ${table.entityPath} ,
                 @RequestParam(name = "length") @ApiParam(name="length",value="页大小",defaultValue = "10")Integer length,
@@ -75,7 +78,8 @@ public class ${table.controllerName} {
       * @return  ResponseData
       */
     @GetMapping("/get${entity}ById")
-    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "query",author = "${author}")
+    @RequiresPermissions(value = {"${table.entityPath}:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}ById",parentId = 0,name = "${table.comment}查询")
     @ApiOperation(value="/get${entity}ById", notes="通过id获取${entity}")
     public ResponseData get${entity}ById( @RequestParam(name = "id") @ApiParam(name="id",value="${entity}ID",required=true)Integer id) {
         ${entity} ${table.entityPath} = ${table.entityPath}Service.findById(id);
@@ -88,7 +92,8 @@ public class ${table.controllerName} {
     * @return  ResponseData
     */
     @PostMapping("/delete${entity}ByIds")
-    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "delete",author = "${author}")
+    @RequiresPermissions(value = {"${table.entityPath}:delete"},logical = Logical.OR)
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/delete${entity}ByIds",parentId = 0,name = "${table.comment}删除")
     @ApiOperation(value="/delete${entity}ByIds", notes="通过id删除${entity}")
     public ResponseData delete${entity}ByIds(@RequestBody  @ApiParam(name="id",value="${entity}ID",required=true)List<Integer> ids) {
 		int id = ${table.entityPath}Service.deleteByIds(ids);
@@ -101,7 +106,8 @@ public class ${table.controllerName} {
      * @return  ResponseData
      */
     @PostMapping("/update${entity}ById")
-    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "update",author = "${author}")
+    @RequiresPermissions(value = {"${table.entityPath}:update"},logical = Logical.OR)
+    @InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/update${entity}ById",parentId = 0,name = "${table.comment}修改")
     @ApiOperation(value="/update${entity}ById", notes="通过id更新${entity}")
     public ResponseData update${entity}ById(@RequestBody @ApiParam(name="${entity}",value="${entity} 实体类")${entity} ${table.entityPath}) {
 		int id = ${table.entityPath}Service.update${entity}(${table.entityPath});
@@ -114,7 +120,8 @@ public class ${table.controllerName} {
     * @return  ResponseData
     */
 	@PostMapping("/add${entity}")
-	@InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/get${entity}List",name = "insert",author = "${author}")
+	@RequiresPermissions(value = {"${table.entityPath}:add"},logical = Logical.OR)
+	@InterfaceInformation(target = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/add${entity}",parentId = 0,name = "${table.comment}添加")
     @ApiOperation(value="/add${entity}", notes="添加${entity}")
     public ResponseData add${entity}(@RequestBody @ApiParam(name="${entity}",value="${entity} 实体类")${entity} ${table.entityPath}) {
 		int id = ${table.entityPath}Service.add${entity}(${table.entityPath});

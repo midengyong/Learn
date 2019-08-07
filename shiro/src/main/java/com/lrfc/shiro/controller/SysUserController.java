@@ -13,13 +13,15 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 /**
  * Title:       [shiro — SysUser模块]
  * Description: [SysUser类信息的controller层接口]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
@@ -34,13 +36,14 @@ public class SysUserController {
 
     /**
      * Description:[单表分页查询]
-     * @param sysUser    [实体]
+     * @param sysUser 用户   [实体]
      * @param length  [单页大小]
      * @param pageNo  [页数]
      * @return  ResponseData
      */
     @GetMapping("/getSysUserList")
-    @InterfaceInformation(target = "/sysUser/getSysUserList",name = "paginationQuery",author = "lrfc")
+    @RequiresPermissions(value = {"sysUser:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysUser/getSysUserList",parentId = 0,name = "用户查询")
     @ApiOperation(value="/getSysUserList", notes="获取分页列表")
     public ResponseData getSysUserList(@ApiParam(name="SysUser",value="SysUser 实体类")SysUser sysUser ,
                 @RequestParam(name = "length") @ApiParam(name="length",value="页大小",defaultValue = "10")Integer length,
@@ -60,7 +63,8 @@ public class SysUserController {
       * @return  ResponseData
       */
     @GetMapping("/getSysUserById")
-    @InterfaceInformation(target = "/sysUser/getSysUserList",name = "query",author = "lrfc")
+    @RequiresPermissions(value = {"sysUser:find"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysUser/getSysUserById",parentId = 0,name = "用户查询")
     @ApiOperation(value="/getSysUserById", notes="通过id获取SysUser")
     public ResponseData getSysUserById( @RequestParam(name = "id") @ApiParam(name="id",value="SysUserID",required=true)Integer id) {
         SysUser sysUser = sysUserService.findById(id);
@@ -73,7 +77,8 @@ public class SysUserController {
     * @return  ResponseData
     */
     @PostMapping("/deleteSysUserByIds")
-    @InterfaceInformation(target = "/sysUser/getSysUserList",name = "delete",author = "lrfc")
+    @RequiresPermissions(value = {"sysUser:delete"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysUser/deleteSysUserByIds",parentId = 0,name = "用户删除")
     @ApiOperation(value="/deleteSysUserByIds", notes="通过id删除SysUser")
     public ResponseData deleteSysUserByIds(@RequestBody  @ApiParam(name="id",value="SysUserID",required=true)List<Integer> ids) {
 		int id = sysUserService.deleteByIds(ids);
@@ -86,7 +91,8 @@ public class SysUserController {
      * @return  ResponseData
      */
     @PostMapping("/updateSysUserById")
-    @InterfaceInformation(target = "/sysUser/getSysUserList",name = "update",author = "lrfc")
+    @RequiresPermissions(value = {"sysUser:update"},logical = Logical.OR)
+    @InterfaceInformation(target = "/sysUser/updateSysUserById",parentId = 0,name = "用户修改")
     @ApiOperation(value="/updateSysUserById", notes="通过id更新SysUser")
     public ResponseData updateSysUserById(@RequestBody @ApiParam(name="SysUser",value="SysUser 实体类")SysUser sysUser) {
 		int id = sysUserService.updateSysUser(sysUser);
@@ -99,7 +105,8 @@ public class SysUserController {
     * @return  ResponseData
     */
 	@PostMapping("/addSysUser")
-	@InterfaceInformation(target = "/sysUser/getSysUserList",name = "insert",author = "lrfc")
+	@RequiresPermissions(value = {"sysUser:add"},logical = Logical.OR)
+	@InterfaceInformation(target = "/sysUser/addSysUser",parentId = 0,name = "用户添加")
     @ApiOperation(value="/addSysUser", notes="添加SysUser")
     public ResponseData addSysUser(@RequestBody @ApiParam(name="SysUser",value="SysUser 实体类")SysUser sysUser) {
 		int id = sysUserService.addSysUser(sysUser);

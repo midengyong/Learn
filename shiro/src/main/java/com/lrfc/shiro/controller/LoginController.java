@@ -1,9 +1,12 @@
 package com.lrfc.shiro.controller;
 
+import com.lrfc.shiro.common.annotation.InterfaceInformation;
 import com.lrfc.shiro.common.utils.PasswordUtils;
 import com.lrfc.shiro.entity.SysUser;
 import com.lrfc.shiro.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,8 @@ public class LoginController {
 	@Autowired
 	private SysUserService sysUserService;
 
+	@RequiresPermissions(value = {"user:add"},logical = Logical.OR)
+	@InterfaceInformation(target = "/addUser",parentId = 0,name = "登录测试")
 	@PostMapping("/addUser")
 	public void addUser( SysUser user){
 		log.info("--------------------");

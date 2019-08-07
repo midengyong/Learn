@@ -7,9 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @MapperScan(basePackages = {"com.lrfc.shiro.mapper"})
 @SpringBootApplication
+@EnableTransactionManagement
 public class ShiroApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

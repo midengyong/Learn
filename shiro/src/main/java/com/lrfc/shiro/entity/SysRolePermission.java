@@ -1,12 +1,13 @@
 package com.lrfc.shiro.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * Title:       [shiro — SysRolePermission模块]
@@ -18,7 +19,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SysRolePermission extends Model<SysRolePermission> {
+public class SysRolePermission extends Model<SysRolePermission> implements Cloneable{
 
 private static final long serialVersionUID=1L;
 
@@ -44,4 +45,8 @@ private static final long serialVersionUID=1L;
         return this.id;
     }
 
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }

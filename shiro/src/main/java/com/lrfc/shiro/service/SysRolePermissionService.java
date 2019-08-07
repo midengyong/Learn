@@ -27,4 +27,11 @@ public interface SysRolePermissionService extends IService<SysRolePermission> {
     SysRolePermission findById(Integer id);
 
 	List<String> findPermissionByRoles(Set<String> roles);
+
+	/**
+	 * Description:[清空数据]
+	 * date: 2019-8-7 10:30
+	 * @return : void
+	 */
+	int cleanRolePermission();
 }

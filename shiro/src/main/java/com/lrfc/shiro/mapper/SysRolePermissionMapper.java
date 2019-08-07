@@ -21,4 +21,6 @@ import java.util.Set;
 public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
 	List<String> findPermissionByRoles(Set<String> roles);
 	List<Map<String, String>> findPermissionsByRoles(Set<String> roles);
+
+	int cleanRolePermission();
 }

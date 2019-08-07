@@ -13,6 +13,11 @@ spring:
       auto-commit: true
       maximum-pool-size: 10
 
+  profiles:
+    include:
+      - menu
+      - mybatis
+      - custom
   thymeleaf:
     cache: false #\u7F13\u5B58
     enabled: true   #\u542F\u7528
@@ -20,49 +25,8 @@ spring:
     prefix: classpath:/template/  #\u524D\u7F00
     suffix: .html
     mode: HTML #\u9875\u9762
-
-
-
-  #  jpa:
-#    show-sql: true
-#    open-in-view: true
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-  #    hibernate:
-  #      ddl-auto: update
-
   http:
     encoding:
       charset: UTF-8
 
 
-
-
-
-
-
-#mybatis
-mybatis-plus:
-  mapper-locations: classpath*:mapper/*.xml,mapper/wx/*.xml
-  #\u5B9E\u4F53\u626B\u63CF\uFF0C\u591A\u4E2Apackage\u7528\u9017\u53F7\u6216\u8005\u5206\u53F7\u5206\u9694
-  typeAliasesPackage: com.lrfc.shiro.entity
-  global-config:
-    #\u81EA\u5B9A\u4E49SQL\u6CE8\u5165\u5668
-    #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-    db-config:
-      #\u903B\u8F91\u5220\u9664\u914D\u7F6E
-      logic-delete-value: Y #\u903B\u8F91\u5220\u9664
-      logic-not-delete-value: N #\u903B\u8F91\u672A\u5220\u9664
-      #\u4E3B\u952E\u7C7B\u578B  AUTO:"\u6570\u636E\u5E93ID\u81EA\u589E", INPUT:"\u7528\u6237\u8F93\u5165ID",ID_WORKER:"\u5168\u5C40\u552F\u4E00ID (\u6570\u5B57\u7C7B\u578B\u552F\u4E00ID)", UUID:"\u5168\u5C40\u552F\u4E00ID UUID";
-      id-type: auto
-      #\u5B57\u6BB5\u7B56\u7565 IGNORED:"\u5FFD\u7565\u5224\u65AD",NOT_NULL:"\u975E NULL \u5224\u65AD"),NOT_EMPTY:"\u975E\u7A7A\u5224\u65AD"
-      field-strategy: NOT_NULL
-      table-underline: true
-      #\u6570\u636E\u5E93\u5927\u5199\u4E0B\u5212\u7EBF\u8F6C\u6362
-      #capital-mode: true
-    banner: true
-
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-    call-setters-on-nulls: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #\u6253\u5370sql\u8BED\u53E5,\u8C03\u8BD5\u7528

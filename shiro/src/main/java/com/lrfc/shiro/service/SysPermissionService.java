@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Title:       [shiro — SysPermission模块]
  * Description: [SysPermission类信息的service层接口]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
@@ -18,9 +18,13 @@ public interface SysPermissionService extends IService<SysPermission> {
 
 	int addSysPermission(SysPermission sysPermission);
 
+	int addSysPermissionById(SysPermission sysPermission);
+
 	int updateSysPermission(SysPermission sysPermission);
 
 	int deleteByIds(List<Integer> ids);
 
     SysPermission findById(Integer id);
+
+	int cleanPermission();
 }

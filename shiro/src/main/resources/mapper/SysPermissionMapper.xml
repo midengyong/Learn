@@ -9,12 +9,21 @@
         <result column="url" property="url" />
         <result column="parent_id" property="parentId" />
         <result column="permission" property="permission" />
+        <result column="type" property="type" />
         <result column="isDeleted" property="isDeleted" />
+        <result column="modifier" property="modifier" />
+        <result column="modify_time" property="modifyTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, url, parent_id, permission, isDeleted
+        id, name, url, parent_id, permission, type, isDeleted, modifier, modify_time
     </sql>
-
+    <delete id="cleanPermission">
+        DELETE  FROM sys_permission
+    </delete>
+    <insert id="addSysPermissionById" parameterType="com.lrfc.shiro.entity.SysPermission">
+        insert into  sys_permission(id,name,url,parent_id,permission,type,isDeleted,modifier,modify_time)
+        value(#{id},#{name},#{url},#{parentId},#{permission},#{type},#{isDeleted},#{modifier},#{modifyTime});
+    </insert>
 </mapper>

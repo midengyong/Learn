@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Title:       [shiro — SysUser模块]
  * Description: [SysUser类信息的service层实现类]
- * Created on   2019-07-18
+ * Created on   2019-08-07
  * @version     V1.0
  * @author  lrfc
  */
