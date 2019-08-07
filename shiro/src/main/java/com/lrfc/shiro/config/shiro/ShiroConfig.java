@@ -2,6 +2,7 @@ package com.lrfc.shiro.config.shiro;
 
 import com.lrfc.shiro.common.utils.PasswordUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -45,6 +46,7 @@ public class ShiroConfig {
 	@Bean("realm")
 	public Realm realm(){
 		ShiroRealm shiroRealm = new ShiroRealm();
+		shiroRealm.setCacheManager(new MemoryConstrainedCacheManager()); // 开启内存缓存
 		shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
 		return shiroRealm;
 	}

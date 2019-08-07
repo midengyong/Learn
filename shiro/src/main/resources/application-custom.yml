@@ -1,7 +1,7 @@
 # 自定义变量
 custom:
   title: xx系统 # 标题
-  isAddMenu: true # 是否重新加载菜单,按钮
+  isAddMenu: false # 是否重新加载菜单,按钮
   system:
     account:
       create: true # 是否创建

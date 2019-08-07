@@ -24,6 +24,7 @@ public class SemaphoreDemo {
 		for (int i = 0;i<20;i++){
 			executorService.execute(semaphoreDemo1);
 		}
+		executorService.shutdown();
 	}
 	class SemaphoreDemo1 implements Runnable{
 		@Override

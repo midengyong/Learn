@@ -22,8 +22,9 @@ public class ThreadGroupName {
 		//启动线程
 		thread1.start();
 		thread2.start();
+		threadGroup.list();
 		//当前组内的线程数
-		log.info(threadGroup.activeCount()+"");
+		log.info("当前组内的线程数:"+threadGroup.activeCount()+"");
 		//当前组内的线程列表
 		threadGroup.list();
 
